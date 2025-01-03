@@ -1,6 +1,7 @@
 # Custom
 src/data/
 migrations/
+manage.py
 
 
 # Byte-compiled / optimized / DLL files
