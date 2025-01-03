@@ -7,6 +7,9 @@ init:
 run:
 	docker compose up
 
+bash:
+	docker container exec -it $(DIRNAME)-web-1 /bin/bash
+
 stop:
 	docker compose down
 

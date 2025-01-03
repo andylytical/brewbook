@@ -1,7 +1,7 @@
-# Django Development Containers
+# Brewbook
 
 # First time run
-1. `export PROJECT_NAME=django_dev`
+1. `export PROJECT_NAME=brewbook`
 1. `git clone https://github.com/andylytical/django-dev-container.git "${PROJECT_NAME}"`
 1. `cd "${PROJECT_NAME}"`
 1. make init

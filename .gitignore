@@ -1,5 +1,6 @@
 # Custom
 src/data/
+migrations/
 
 
 # Byte-compiled / optimized / DLL files
