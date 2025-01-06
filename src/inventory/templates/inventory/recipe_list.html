@@ -1,0 +1,17 @@
+{% extends "./base_inventory.html" %}
+
+{% block title %}{{ block.super }} - Recipes{% endblock %}
+
+{% block main %}
+  <div class="section">
+    <h2>Recipes</h2>
+    {% for recipe in recipe_list %}
+    <p>
+      <a href="{% url 'inventory:recipe_detail' recipe.name %}">{{ recipe.name }}</a>
+      {% if recipe.url %}
+        (<a href="{{ recipe.url }}">source</a>)
+      {% endif %}
+    </p>
+    {% endfor %}
+  </div>
+{% endblock main %}

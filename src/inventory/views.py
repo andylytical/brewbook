@@ -61,6 +61,8 @@ def recipe_update( request, recipe_name ):
     # Process request.POST'ed data to update the specified recipe
     recipe = Recipe.objects.get( name=recipe_name )
     # get all POSTed ingredients
+    old = {}
+    new = {}
     for k,v in request.POST.items():
         ingr_name = k[7:]
         if k.startswith( 'newval_' ):

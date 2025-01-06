@@ -1,0 +1,30 @@
+{% extends "./base_inventory.html" %}
+
+{% block title %}{{ recipe.name }} - {{ block.super }}{% endblock %}
+
+{% block status %}
+  <h1>Recipe Detail - {{ recipe.name }}</h1>
+  <p><a href="{% url 'inventory:recipe_edit' recipe.name %}">Edit recipe</a></p>
+{% endblock status %}
+
+{% block main %}
+  {% for type, ingredients in ingredient_types.items %}
+  <div class="section">
+    <h2>{{ type.name }}</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+      </tr>
+      {% for i in ingredients %}
+      {# each ingredient "i" is a dict with keys: 'ingredient' and 'recipe_ingredient' #}
+      <tr class="{% cycle 'tr1' 'tr2' %}">
+        <td>{{ i.ingredient.name }}</td>
+        <td>{{ i.recipe_ingredient.quantity_in_recipe }} {{ type.unit }}</td>
+      </tr>
+      {% endfor %}
+      {% resetcycle %}
+    </table>
+  </div>
+  {% endfor %}
+{% endblock main %}

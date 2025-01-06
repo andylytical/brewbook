@@ -1,0 +1,36 @@
+{% extends "./base_inventory.html" %}
+
+{% block title %}{{ recipe.name }} - {{ block.super }}{% endblock %}
+
+{% block status %}
+  <h1>Edit Recipe - {{ recipe.name }}</h1>
+  <form action="{% url 'inventory:recipe_update' recipe.name %}" method="post" >
+  {% csrf_token %}
+  <input type="submit" value="Save">
+  <input type="reset">
+{% endblock status %}
+
+{% block main %}
+  {% for type, ingredients in ingredient_types.items %}
+  <div class="section">
+    <h2>{{ type.name }}</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+      </tr>
+      {% for i,q in ingredients.items %}
+      <tr class="{% cycle 'tr1' 'tr2' %}">
+        <td>{{ i }}</td>
+        <td>
+          <input type="text" name="newval_{{i}}" size="3" value="{{ q }}"</input>
+          {{ type.unit }}
+          <input type="hidden" name="oldval_{{i}}" value="{{ q }}"</input>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endfor %}
+  </form>
+{% endblock main %}
