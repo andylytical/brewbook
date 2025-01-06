@@ -4,7 +4,7 @@
 1. `export PROJECT_NAME=brewbook`
 1. `git clone https://github.com/andylytical/django-dev-container.git "${PROJECT_NAME}"`
 1. `cd "${PROJECT_NAME}"`
-1. make init
+1. `make init`
 1. `sudo chown -R $USER:$USER src/"${PROJECT_NAME}"/`
 1. `sed -i -e '1 i import os' src/"${PROJECT_NAME}"/settings.py`
 1. Set database connection params
