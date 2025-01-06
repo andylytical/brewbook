@@ -18,4 +18,6 @@ clean:
 	docker compose rm -f
 	docker container prune -f
 	docker images | awk '/$(DIRNAME)/ {print $$3}' | xargs -r docker rmi
-	docker system prune -f
+	docker system prune -a -f
+	sudo find src -type d -name data -delete
+	sudo find src -type d -name migrations
