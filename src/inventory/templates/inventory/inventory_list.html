@@ -15,7 +15,7 @@
       {% for i in ingredients %}
       <tr class="{% cycle 'tr1' 'tr2' %}">
         <td>{{ i.name }}</td>
-        <td>{{ i.quantity_in_stock }}</td>
+        <td>{{ i.quantity_in_stock }} {{ type.unit }}</td>
       </tr>
       {% endfor %}
     </table>
