@@ -9,4 +9,5 @@ urlpatterns = [
     path( "recipe/<recipe_name>/", views.recipe_detail, name="recipe_detail" ),
     path( "recipe/<recipe_name>/edit/", views.recipe_edit, name="recipe_edit" ),
     path( "recipe/<recipe_name>/update/", views.recipe_update, name="recipe_update" ),
+    path( "shop/", views.shop, name="shopping_list" ),
 ]

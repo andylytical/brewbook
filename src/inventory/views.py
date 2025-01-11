@@ -84,3 +84,12 @@ def recipe_update( request, recipe_name ):
             else:
                 recipe_ingr.delete()
     return HttpResponseRedirect( reverse( "inventory:recipe_detail", args=( recipe_name, ) ) )
+
+
+def shop( request ):
+    if request.method == 'POST':
+        # if POST, create shopping list for specified recipes
+        rv = {}
+    else:
+        # otherwise, display list of recipes to choose from
+        rv = {}

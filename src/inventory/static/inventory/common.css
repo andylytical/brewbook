@@ -27,6 +27,11 @@ tr.tr2 {
   background-color: #d3d3d3;
 }
 
+.textcenter {
+  text-align: center;
+}
+
+
 /* Column container */
 .row {  
     display: flex;
