@@ -1,0 +1,49 @@
+{% extends "./base_inventory.html" %}
+
+{% block title %}Shopping List - {{ block.super }}{% endblock %}
+
+{% block status %}
+  <h1>Shopping List</h1>
+{% endblock status %}
+
+{% block main %}
+  <div class="section">
+    <h2>Shopping List</h2>
+    <table>
+      <tr>
+        <th>Type</th>
+        <th>Ingredient</th>
+        <th>Needed</th>
+        <th>In Stock</th>
+        <th>To Purchase</th>
+      </tr>
+      {% for ingredient, qty in ingredients.items %}
+      {# each idata item is a dict with keys: 'ingredient' and 'qty_needed' #}
+      <tr class="{% cycle 'tr1' 'tr2' %}">
+        {# Type #}
+        <td>{{ ingredient.ingredient_type.name }}</td>
+        {# Ingredient #}
+        <td>{{ ingredient.name }}</td>
+        {# Needed #}
+        <td>
+          {{ qty.needed }}
+          {{ ingredient.ingredient_type.unit }}
+        </td>
+        {# In Stock #}
+        <td>
+          {{ ingredient.quantity_in_stock }}
+          {{ ingredient.ingredient_type.unit }}
+        </td>
+        {# To Purchase #}
+        <td>
+          {{ qty.to_purchase}}
+          {% if qty.to_purchase > 0 %}
+            {{ ingredient.ingredient_type.unit }}
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+      {% resetcycle %}
+    </table>
+  </div>
+{% endblock main %}

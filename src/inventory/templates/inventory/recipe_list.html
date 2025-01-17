@@ -16,24 +16,28 @@
       </tr>
       {% for recipe in recipe_list %}
       <tr class="{% cycle 'tr1' 'tr2' %}">
-        <td> {# Name #}
+        {# Name #}
+        <td>
           <a href="{% url 'inventory:recipe_detail' recipe.name %}">{{ recipe.name }}</a>
         </td>
-        <td> {# Reference #}
+        {# Reference #}
+        <td>
         {% if recipe.url %}
           <a href="{{ recipe.url }}">source</a>
         {% elif recipe.notes|length > 0 %}
           {{ recipe.notes|truncatewords_html:3 }}
         {% endif %}
         </td>
-        <td> {# Edit #}
+        {# Edit #}
+        <td>
           <a href="{% url 'inventory:recipe_edit' recipe.name %}">(edit)</a>
         </td>
-        <td class="textcenter"> {# Shop #}
+        {# Shopping List #}
+        <td class="textcenter">
           <input
             type="checkbox"
             id="{{ recipe.id }}"
-            name="{{ recipe.name }}"
+            name="recipe_include_{{ recipe.id }}"
             value="{{ recipe.name }}" >
         </td>
       </tr>

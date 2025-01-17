@@ -86,10 +86,36 @@ def recipe_update( request, recipe_name ):
     return HttpResponseRedirect( reverse( "inventory:recipe_detail", args=( recipe_name, ) ) )
 
 
-def shop( request ):
+def shopping_list( request ):
     if request.method == 'POST':
-        # if POST, create shopping list for specified recipes
-        rv = {}
+        # create shopping list for specified recipes
+        # shop_data = {}
+        ingredients = {}
+        for key, val in request.POST.items():
+            if key.startswith( 'recipe_include_' ):
+                recipe = Recipe.objects.get( name = val )
+                recipe_ingredients = Recipe_Ingredient.objects.filter( recipe = recipe )
+                for ri in recipe_ingredients:
+                    i = ri.ingredient
+                    last = ingredients.setdefault( i, {'needed':0, 'to_purchase':0} )
+                    last['needed'] += ri.quantity_in_recipe
+                    # data = shop_data.setdefault( i.name, { 'ingredient': i, 'qty_needed': 0 } )
+                    # data['qty_needed'] += ri.quantity_in_recipe
+        # for name, data in shop_data.items():
+        #     # to_purchase = data['qty_needed'] - data['ingredient'].quantity_on_hand
+        #     data[ 'quantity_to_purchase' ] = data['qty_needed'] - data['ingredient'].quantity_in_stock
+        for i, last in ingredients.items():
+            if i.quantity_in_stock < last['needed']:
+                last['to_purchase'] = last['needed'] - i.quantity_in_stock
+            # shop_data[ name ].extend( { 'to_purchase': to_purchase } )
+        # debug = pprint.pformat( shop_data )
+        # return HttpResponse( debug, content_type="text/plain" )
+        # context = { 'data': shop_data }
+        context = { 'ingredients': ingredients }
+        rv = render( request, 'inventory/shopping_list.html', context )
     else:
-        # otherwise, display list of recipes to choose from
-        rv = {}
+        # otherwise, redirect to list of recipes
+        rv = HttpResponseRedirect(
+            reverse( "inventory:recipe_list" )
+            )
+    return rv

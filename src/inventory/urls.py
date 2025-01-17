@@ -5,9 +5,9 @@ from . import views
 app_name = "inventory"
 urlpatterns = [
     path( "", views.index, name="index" ),
-    path( "recipe/", views.Recipe_List.as_view(), name="recipe_list" ),
+    path( "recipes/", views.Recipe_List.as_view(), name="recipe_list" ),
     path( "recipe/<recipe_name>/", views.recipe_detail, name="recipe_detail" ),
     path( "recipe/<recipe_name>/edit/", views.recipe_edit, name="recipe_edit" ),
     path( "recipe/<recipe_name>/update/", views.recipe_update, name="recipe_update" ),
-    path( "shop/", views.shop, name="shopping_list" ),
+    path( "shopping_list/", views.shopping_list, name="shopping_list" ),
 ]
