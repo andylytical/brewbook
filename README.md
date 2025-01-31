@@ -1,5 +1,7 @@
 # Brewbook
 
+TODO - update for accuracy
+
 # First time run
 1. `export PROJECT_NAME=brewbook`
 1. `git clone https://github.com/andylytical/django-dev-container.git "${PROJECT_NAME}"`
