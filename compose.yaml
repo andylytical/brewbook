@@ -1,0 +1,31 @@
+# See also:
+# https://github.com/docker/awesome-compose/tree/master/official-documentation-samples/django/
+services:
+  db:
+    image: postgres
+    volumes:
+      - type: bind
+        source: ./src/data/db
+        target: /var/lib/postgresql/data
+        bind:
+          create_host_path: true
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    # command: /bin/bash
+    volumes:
+      - type: bind
+        source: ./src
+        target: /app
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db

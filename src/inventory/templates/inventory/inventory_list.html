@@ -1,0 +1,35 @@
+{% extends "./base_inventory.html" %}
+
+{% block topnav %}
+{% include "inventory/topnav.html" with active='Inventory' %}
+{% endblock topnav %}
+
+{% block content-header %}
+<h1>Inventory List</h1>
+{% endblock content-header %}
+
+{% block status %}
+<form method="get" action="{% url 'inventory:inventory_edit' %}">
+  <input type="submit" value="Edit">
+</form>
+{% endblock status %}
+
+{% block main %}
+  {% for type, ingredients in ingredient_types.items %}
+  <div class="section">
+    <h2>{{ type.name }}</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+      </tr>
+      {% for i in ingredients %}
+      <tr class="{% cycle 'tr1' 'tr2' %}">
+        <td>{{ i.name }}</td>
+        <td>{{ i.quantity_in_stock }} {{ type.unit }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endfor %}
+{% endblock main %}

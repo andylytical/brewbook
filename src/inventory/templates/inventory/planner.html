@@ -1,0 +1,58 @@
+{% extends "./base_inventory.html" %}
+
+{% block topnav %}
+{% include "inventory/topnav.html" with active='Planner' %}
+{% endblock topnav %}
+
+{% block content-header %}
+<h1>Recipe Planner</h1>
+{% if filters %}
+  Filters applied:
+  {% for f in filters %}
+  <button type="button">{{ f }}</button>
+  {% endfor %}
+{% endif %}
+{% endblock content-header %}
+
+{% block status %}
+<form method="get" action="{% url 'inventory:planner' %}">
+  <input type="submit" value="Clear filters">
+</form>
+<form method="post" action="{% url 'inventory:planner' %}" id="filter">
+  {% csrf_token %}
+  <input type="reset" value="Reset form">
+  <input type="submit" value="Apply filter">
+</form>
+{% endblock status %}
+
+{% block main %}
+  <table>
+    <tr>
+      <th></th>
+      {% for r in recipes %}
+      <th>
+        <input type="checkbox" name="recipe_include_{{r.id}}" value="{{r.name}}" form="filter"><br/>
+        {{ r }}
+      </th>
+      {% endfor %}
+    </tr>
+    {% for i in ingredients %}
+      <tr class="{% cycle 'tr1' 'tr2' %}">
+        <td>
+          <input type="checkbox" name="ingredient_include_{{i.id}}" value="{{i.name}}" form="filter">
+          {{ i }}
+        </td>
+        {% for r in recipes %}
+          <td>
+            {% for r_i in r.recipe_ingredient_set.all %}
+              {% if r_i.ingredient == i %}
+                {{ r_i.quantity_in_recipe }}
+                {{ i.ingredient_type.unit }}
+              {% endif %}
+            {% endfor %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock main %}

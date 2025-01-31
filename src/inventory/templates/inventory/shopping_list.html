@@ -1,0 +1,64 @@
+{% extends "./base_inventory.html" %}
+
+{% block topnav %}
+{% include "inventory/topnav.html" with active='Recipes' %}
+{% endblock topnav %}
+
+{% block content-header %}
+  <h1>Shopping List</h1>
+  {% for r in recipes %}
+    <p>{{ r }} </p>
+  {% endfor %}
+{% endblock content-header %}
+
+{% block status %}
+  <form action="{% url 'inventory:inventory_edit' %}" method="post" >
+  {% csrf_token %}
+  <input type="submit" value="Add to inventory">
+{% endblock status %}
+
+{% block main %}
+  <div class="section">
+    {% for r in recipes %}
+      <h2>{{ r }}</h2>
+    {% endfor %}
+    <table>
+      <tr>
+        <th>Type</th>
+        <th>Ingredient</th>
+        <th>Needed</th>
+        <th>In Stock</th>
+        <th>To Purchase</th>
+      </tr>
+      {% for ingredient, qty in ingredients.items %}
+      {# each idata item is a dict with keys: 'ingredient' and 'qty_needed' #}
+      <tr class="{% cycle 'tr1' 'tr2' %}">
+        {# Type #}
+        <td>{{ ingredient.ingredient_type.name }}</td>
+        {# Ingredient #}
+        <td>{{ ingredient.name }}</td>
+        {# Needed #}
+        <td>
+          {{ qty.needed }}
+          {{ ingredient.ingredient_type.unit }}
+        </td>
+        {# In Stock #}
+        <td>
+          {{ ingredient.quantity_in_stock }}
+          {{ ingredient.ingredient_type.unit }}
+        </td>
+        {# To Purchase #}
+        <td>
+          {{ qty.to_purchase }}
+          {% if qty.to_purchase > 0 %}
+            {{ ingredient.ingredient_type.unit }}
+            <input type="hidden" name="adj_{{ ingredient }}" value="{{ qty.to_purchase }}">
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+      {% resetcycle %}
+    </table>
+  </div>
+  </form
+{% endblock main %}

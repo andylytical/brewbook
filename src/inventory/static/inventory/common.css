@@ -1,0 +1,120 @@
+
+/* ========== TOPNAV ========== */
+
+.topnav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav li {
+  float: left;
+  border-right: 1px solid #666;
+}
+
+.topnav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.topnav li a:hover {
+  background-color: #111;
+}
+
+/* In topnav, the currently active page */
+.active {
+  background-color: #04AA6D;
+}
+
+
+
+/* ========== CONTENT HEADER ========== */
+
+/* header flex conatiner */
+#page-header {
+  display: flex;
+}
+
+/* flex item */
+#content-header {
+  flex: 70%;
+  padding: 5pt 5pt 5pt 45pt;
+  text-align: left;
+}
+
+/* #content-header h1 { */
+/*   padding-left: 25pt; */
+/* } */
+
+/* flex item */
+#status {
+  flex: 30%;
+  padding: 5pt;
+  text-align: right;
+}
+
+#status input {
+  margin: 1pt;
+}
+
+
+
+
+/* ========== CONTENT MAIN ========== */
+
+/* generic flex container */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* main flex item */
+.section {
+    margin: 3pt;
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding: 5pt;
+}
+
+
+
+/* Style the body */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    /* font-size: 16px; */
+    margin: 0;
+}
+
+h2 {
+    text-decoration: overline underline;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 4px;
+}
+
+.tr1 {
+  background-color: #ffffff;
+}
+.tr2 {
+  background-color: #d3d3d3;
+}
+
+.textcenter {
+  text-align: center;
+}
+
+
+@media screen and (max-width: 700px) {
+    .row, .navbar {
+        flex-direction: column;
+    }
+}

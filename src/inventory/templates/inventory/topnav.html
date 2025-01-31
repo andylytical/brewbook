@@ -1,0 +1,9 @@
+<ul>
+  {% for item in topnav_menu %}
+  {% if item.label == active %}
+    <li><a class="active" href="{% url item.url %}">{{ item.label }}</a>
+  {% else %}
+    <li><a href="{% url item.url %}">{{ item.label }}</a>
+  {% endif %}
+{% endfor %}
+</ul>

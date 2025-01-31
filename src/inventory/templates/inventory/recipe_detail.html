@@ -1,0 +1,45 @@
+{% extends "./base_inventory.html" %}
+
+{% block topnav %}
+{% include "inventory/topnav.html" with active='Recipes' %}
+{% endblock topnav %}
+
+{% block content-header %}
+<h1>Recipe Details - {{ recipe }}</h1>
+{% endblock content-header %}
+
+{% block status %}
+  <form method="get" action="{% url 'inventory:recipe_edit' recipe.name %}">
+    <input type="submit" value="Edit recipe">
+  </form>
+  <form method="post" action="{% url 'inventory:inventory_edit' %}">
+    {% csrf_token %}
+    <input type="submit" value="Subtract from inventory">
+{% endblock status %}
+
+{% block main %}
+  {% for type, ingredients in ingredient_types.items %}
+  <div class="section">
+    <h2>{{ type.name }}</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+      </tr>
+      {% for i in ingredients %}
+      {# each ingredient "i" is a dict with keys: 'ingredient' and 'recipe_ingredient' #}
+      <tr class="{% cycle 'tr1' 'tr2' %}">
+        <td>{{ i.ingredient.name }}</td>
+        <td>{{ i.recipe_ingredient.quantity_in_recipe }} {{ type.unit }}</td>
+        <input
+          type="hidden"
+          name="adj_{{ i.ingredient.name }}"
+          value="-{{ i.recipe_ingredient.quantity_in_recipe }}">
+      </tr>
+      {% endfor %}
+      {% resetcycle %}
+    </table>
+  </div>
+  {% endfor %}
+  </form>
+{% endblock main %}

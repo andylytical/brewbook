@@ -1,0 +1,63 @@
+{% extends "./base_inventory.html" %}
+
+{% block topnav %}
+{% include "inventory/topnav.html" with active='Recipes' %}
+{% endblock topnav %}
+
+{% block content-header %}
+<h1>Recipe List</h1>
+{% endblock content-header %}
+
+
+{% block main %}
+  <div class="section">
+    <h2>Recipes</h2>
+    <form action="{% url 'inventory:shopping_list' %}" method="post">
+      {% csrf_token %}
+      <table>
+      <tr>
+        <th>Recipe</th>
+        <th>Reference</th>
+        <th>Edit</th>
+        <th>Shopping List<br/>Include</th>
+      </tr>
+      {% for recipe in recipe_list %}
+      <tr class="{% cycle 'tr1' 'tr2' %}">
+        {# Name #}
+        <td>
+          <a href="{% url 'inventory:recipe_detail' recipe.name %}">{{ recipe.name }}</a>
+        </td>
+        {# Reference #}
+        <td>
+        {% if recipe.url %}
+          <a href="{{ recipe.url }}">source</a>
+        {% elif recipe.notes|length > 0 %}
+          {{ recipe.notes|truncatewords_html:3 }}
+        {% endif %}
+        </td>
+        {# Edit #}
+        <td>
+          <a href="{% url 'inventory:recipe_edit' recipe.name %}">(edit)</a>
+        </td>
+        {# Shopping List #}
+        <td class="textcenter">
+          <input
+            type="checkbox"
+            id="{{ recipe.id }}"
+            name="recipe_include_{{ recipe.id }}"
+            value="{{ recipe.name }}" >
+        </td>
+      </tr>
+      {% endfor %}
+      <tr class="{% cycle 'tr1' 'tr2' %}">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="textcenter">
+          <input type="submit" value="Make Shopping List">
+        </td>
+      </tr>
+      </table>
+    </form>
+  </div>
+{% endblock main %}
