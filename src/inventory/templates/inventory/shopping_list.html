@@ -6,9 +6,6 @@
 
 {% block content-header %}
   <h1>Shopping List</h1>
-  {% for r in recipes %}
-    <p>{{ r }} </p>
-  {% endfor %}
 {% endblock content-header %}
 
 {% block status %}
@@ -19,9 +16,14 @@
 
 {% block main %}
   <div class="section">
-    {% for r in recipes %}
-      <h2>{{ r }}</h2>
-    {% endfor %}
+    {% if recipes %}
+    <h2>Ingredients needed for:</h2>
+    <p>
+      {% for r in recipes %}
+      <button type="button">{{ r }} </button>
+      {% endfor %}
+    </p>
+    {% endif %}
     <table>
       <tr>
         <th>Type</th>
