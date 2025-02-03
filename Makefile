@@ -1,5 +1,5 @@
 DIRNAME := $(shell basename $$(pwd))
-HOME := $(shell echo $$HOME)
+BIN := src/bin
 
 help:
 	echo "Synopsis: make [init up down web db clean bkup reset]"
@@ -19,9 +19,11 @@ clean:
 	docker container prune -f
 	docker images | awk '/$(DIRNAME)/ {print $$3}' | xargs -r docker rmi
 	docker system prune -a -f
-	bash $@.sh
+	bash $(BIN)/clean.sh
 
 bkup:
-	bash $@.sh
+	bash $(BIN)/bkup.sh install
+	docker container exec -it $(DIRNAME)-db-1 /var/lib/postgresql/data/mk_sql_dump.sh
+	bash $(BIN)/bkup.sh save
 
 reset: bkup clean
